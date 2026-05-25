@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GalfitX - Astronomical Image Processing Pipeline</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">
+                <h1>GalfitX</h1>
+            </div>
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#features">Features</a></li>
+                <li><a href="#installation">Installation</a></li>
+                <li><a href="#usage">Usage</a></li>
+                <li><a href="#api">API</a></li>
+                <li><a href="#contributing">Contributing</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section id="home" class="hero">
+            <div class="container">
+                <h1>GalfitX Documentation</h1>
+                <p>A sophisticated astronomical image processing pipeline for multi-wavelength analysis</p>
+                <a href="#getting-started" class="cta-button">Get Started</a>
+            </div>
+        </section>
+
+        <section id="about" class="about">
+            <div class="container">
+                <h2>About GalfitX</h2>
+                <p>GalfitX is a powerful astronomical image processing pipeline that provides automated source detection, image decomposition, and photometry measurements across multiple wavelengths. It integrates the robust GalfitS modeling software with custom preprocessing and postprocessing utilities for comprehensive galaxy analysis.</p>
+
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <h3>Multi-wavelength Analysis</h3>
+                        <p>Supports processing of multi-band imaging data with consistent calibration</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3>Automated Pipeline</h3>
+                        <p>Fully automated source detection and fitting procedures</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3>Astronomical Focus</h3>
+                        <p>Specifically designed for galaxy morphology and photometric analysis</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3>Modular Architecture</h3>
+                        <p>Flexible, component-based design allowing customization</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="features" class="features">
+            <div class="container">
+                <h2>Key Features</h2>
+                <div class="feature-list">
+                    <div class="feature-item">
+                        <h3>Source Detection</h3>
+                        <p>Advanced detection algorithms using SExtractor-based methods with HDR capabilities</p>
+                    </div>
+                    <div class="feature-item">
+                        <h3>PSF Generation</h3>
+                        <p>Point Spread Function creation and handling for multiple bands</p>
+                    </div>
+                    <div class="feature-item">
+                        <h3>Mask Creation</h3>
+                        <p>Automated generation of masks for neighboring objects</p>
+                    </div>
+                    <div class="feature-item">
+                        <h3>Sky Estimation</h3>
+                        <p>Accurate background subtraction algorithms</p>
+                    </div>
+                    <div class="feature-item">
+                        <h3>Model Fitting</h3>
+                        <p>Integration with GalfitS for morphological parameter estimation</p>
+                    </div>
+                    <div class="feature-item">
+                        <h3>Photometry</h3>
+                        <p>Precise flux and magnitude calculations</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="installation" class="installation">
+            <div class="container">
+                <h2>Installation</h2>
+                <div class="install-steps">
+                    <h3>Prerequisites</h3>
+                    <ul>
+                        <li>Python 3.11 or higher</li>
+                        <li>GalfitS (external dependency)</li>
+                    </ul>
+
+                    <h3>Dependencies</h3>
+                    <p>The project requires the following packages:</p>
+                    <pre><code>astropy==6.0.0
+matplotlib==3.10.8
+numba==0.60.0
+numpy==1.26.4
+pandas==3.0.1
+photutils==2.3.0
+reproject==0.14.1
+scipy==1.17.1
+toml==0.10.2
+tqdm==4.66.5</code></pre>
+
+                    <h3>Installation Steps</h3>
+                    <ol>
+                        <li>Clone the repository:
+                            <pre><code>git clone https://github.com/pinsongzhao/zps-gx.git
+cd zps-gx</code></pre>
+                        </li>
+                        <li>Install dependencies:
+                            <pre><code>pip install -r requirements.txt</code></pre>
+                        </li>
+                        <li>Install the package:
+                            <pre><code>pip install -e .</code></pre>
+                        </li>
+                    </ol>
+                </div>
+            </div>
+        </section>
+
+        <section id="usage" class="usage">
+            <div class="container">
+                <h2>Usage Examples</h2>
+                <div class="code-example">
+                    <h3>Basic Usage</h3>
+                    <p>The primary usage pattern involves preparing inputs and calling the core pipeline:</p>
+                    <pre><code>from galfitx import core_galfitx
+
+result = core_galfitx(
+    image_name="/path/to/detection_image.fits",
+    weight_name="/path/to/weight_image.fits",
+    kernel_name="/path/to/kernel.txt",
+    image_list=["/path/to/band1.fits", "/path/to/band2.fits"],
+    outdir_list=["./output/band1/", "./output/band2/"],
+    filter_list=["F475W", "F814W"],
+    label_list=["band1", "band2"],
+    psf_list=["/path/to/psf1.fits", "/path/to/psf2.fits"],
+    zero_list=[25.0, 25.0],
+    config="./config.toml"
+)</code></pre>
+                </div>
+            </div>
+        </section>
+
+        <section id="api" class="api">
+            <div class="container">
+                <h2>API Reference</h2>
+                <div class="api-section">
+                    <h3>core_galfitx function</h3>
+                    <p>Main entry point for the pipeline with the following parameters:</p>
+                    <ul>
+                        <li><strong>image_name</strong>: Path to detection image</li>
+                        <li><strong>weight_name</strong>: Path to weight image</li>
+                        <li><strong>kernel_name</strong>: Path to convolution kernel file</li>
+                        <li><strong>image_list</strong>: Paths to multi-band science images</li>
+                        <li><strong>outdir_list</strong>: Directories to store multi-band postage stamps</li>
+                        <li><strong>filter_list</strong>: Filter identifiers for GalfitS</li>
+                        <li><strong>label_list</strong>: Labels for each filter</li>
+                        <li><strong>psf_list</strong>: Paths to multi-band input PSF images</li>
+                        <li><strong>zero_list</strong>: Multi-band magnitude zeropoints</li>
+                        <li><strong>config</strong>: Path to configuration file</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 GalfitX Project. Licensed under MIT License.</p>
+            <p>Created with ❤️ for the astronomy community</p>
+        </div>
+    </footer>
+</body>
+</html>

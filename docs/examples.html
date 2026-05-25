@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GalfitX Examples</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .example-nav {
+            background-color: var(--light-color);
+            padding: 1rem;
+            margin-bottom: 2rem;
+            border-radius: 5px;
+        }
+
+        .example-nav a {
+            margin-right: 1rem;
+            text-decoration: none;
+            color: var(--secondary-color);
+        }
+
+        .example-card {
+            background-color: white;
+            margin: 1.5rem 0;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+        }
+
+        .code-block {
+            background-color: #2d3748;
+            color: #e2e8f0;
+            padding: 1rem;
+            border-radius: 5px;
+            overflow-x: auto;
+            margin: 1rem 0;
+        }
+
+        .output-block {
+            background-color: #f7fafc;
+            border: 1px solid #e2e8f0;
+            padding: 1rem;
+            border-radius: 5px;
+            margin: 1rem 0;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">
+                <h1>GalfitX</h1>
+            </div>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="api.html">API</a></li>
+                <li><a href="tutorials.html">Tutorials</a></li>
+                <li><a href="examples.html">Examples</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="example-nav">
+            <a href="#basic-example">Basic Example</a> |
+            <a href="#multiband">Multi-band Analysis</a> |
+            <a href="#custom-parameters">Custom Parameters</a> |
+            <a href="#batch-processing">Batch Processing</a>
+        </section>
+
+        <div class="container">
+            <h1>GalfitX Examples</h1>
+
+            <section id="basic-example" class="example-card">
+                <h2>Basic Usage Example</h2>
+                <p>A simple example showing how to run GalfitX on a single image.</p>
+
+                <div class="code-block">
+                    <pre><code>from galfitx import core_galfitx
+
+# Define input files
+image_name = "./data/hst_acs_f814w.fits"
+weight_name = "./data/hst_acs_f814w_weight.fits"
+kernel_name = "./data/acs_kernel.txt"
+
+# Define multi-band images (in this case, just one band)
+image_list = [image_name]
+outdir_list = ["./output/stamps/"]
+filter_list = ["F814W"]
+label_list = ["acs"]
+psf_list = ["./data/acs_psf.fits"]
+zero_list = [25.96]  # ACS F814W zeropoint
+
+# Run the pipeline
+result = core_galfitx(
+    image_name=image_name,
+    weight_name=weight_name,
+    kernel_name=kernel_name,
+    image_list=image_list,
+    outdir_list=outdir_list,
+    filter_list=filter_list,
+    label_list=label_list,
+    psf_list=psf_list,
+    zero_list=zero_list,
+    config="./config/csst.toml"
+)
+
+print(f"Pipeline completed with status: {result}")
+</code></pre>
+                </div>
+
+                <div class="output-block">
+                    <h3>Expected Output</h3>
+                    <p>After running the basic example, you should see output similar to:</p>
+                    <pre><code>Source detection completed: 1247 sources found
+Creating stamps for 1247 sources...
+Processing in brightness order...
+Running GalfitS on source 1/1247
+Running GalfitS on source 2/1247
+...
+Pipeline completed with status: 1</code></pre>
+                </div>
+            </section>
+
+            <section id="multiband" class="example-card">
+                <h2>Multi-band Analysis</h2>
+                <p>Example of analyzing the same region across multiple wavelength bands.</p>
+
+                <div class="code-block">
+                    <pre><code>from galfitx import core_galfitx
+
+# Multi-band data
+detection_img = "./data/hst_detection.fits"  # Deepest band for detection
+weight_img = "./data/hst_detection_weight.fits"
+
+# All bands to be analyzed jointly
+image_list = [
+    "./data/hst_acs_f475w.fits",  # B-band equivalent
+    "./data/hst_acs_f814w.fits",  # I-band equivalent
+    "./data/hst_wfc3_f125w.fits", # J-band equivalent
+    "./data/hst_wfc3_f160w.fits"  # H-band equivalent
+]
+
+outdir_list = [
+    "./output/acs_f475w/",
+    "./output/acs_f814w/",
+    "./output/wfc3_f125w/",
+    "./output/wfc3_f160w/"
+]
+
+filter_list = ["F475W", "F814W", "F125W", "F160W"]
+label_list = ["b", "i", "j", "h"]
+
+psf_list = [
+    "./data/psf_acs_f475w.fits",
+    "./data/psf_acs_f814w.fits",
+    "./data/psf_wfc3_f125w.fits",
+    "./data/psf_wfc3_f160w.fits"
+]
+
+# Zeropoints for each band
+zero_list = [26.05, 25.96, 26.25, 25.94]
+
+result = core_galfitx(
+    image_name=detection_img,
+    weight_name=weight_img,
+    kernel_name="./data/joint_kernel.txt",
+    image_list=image_list,
+    outdir_list=outdir_list,
+    filter_list=filter_list,
+    label_list=label_list,
+    psf_list=psf_list,
+    zero_list=zero_list,
+    config="./config/multiband.toml"
+)
+</code></pre>
+                </div>
+            </section>
+
+            <section id="custom-parameters" class="example-card">
+                <h2>Custom Configuration Example</h2>
+                <p>Using custom parameters for specific analysis needs.</p>
+
+                <div class="code-block">
+                    <pre><code>from galfitx import core_galfitx
+import toml
+
+# Create custom configuration
+config_data = {
+    "detect_minarea_cold": 8,
+    "detect_minarea_hot": 8,
+    "detect_thresh_cold": 1.2,
+    "detect_thresh_hot": 1.8,
+    "deblend": True,
+    "deblend_nthresh_cold": 64,
+    "deblend_nthresh_hot": 64,
+    "deblend_mincont_cold": 0.003,
+    "deblend_mincont_hot": 0.003,
+    "clean": True,
+    "back_type": "AUTO",
+    "back_value": 0.0,
+    "back_size_cold": 128,
+    "back_size_hot": 128,
+    "back_filtersize": 3,
+    "BACKGROUND": "WEIGHT",
+    "scale_factor": 1.0,
+    "pixel_scale": 0.05,  # ACS pixel scale
+    "sizefac": 10,  # Larger stamps for extended galaxies
+    "scale": 1.0,
+    "offset": 0,
+    "limgal": -1,
+    "b": 0.3,
+    "setup": "custom_setup.conf"
+}
+
+# Save custom configuration
+with open('./config/custom_config.toml', 'w') as f:
+    toml.dump(config_data, f)
+
+# Run with custom config
+result = core_galfitx(
+    image_name="./data/deep_field.fits",
+    weight_name="./data/deep_field_weight.fits",
+    kernel_name="./data/custom_kernel.txt",
+    image_list=["./data/deep_field.fits"],
+    outdir_list=["./output/deep_custom/"],
+    filter_list=["custom"],
+    label_list=["deep"],
+    psf_list=["./data/deep_field_psf.fits"],
+    zero_list=[25.5],
+    config="./config/custom_config.toml"
+)
+</code></pre>
+                </div>
+            </section>
+
+            <section id="batch-processing" class="example-card">
+                <h2>Batch Processing Example</h2>
+                <p>Processing multiple fields or datasets in batch mode.</p>
+
+                <div class="code-block">
+                    <pre><code>import os
+from pathlib import Path
+from galfitx import core_galfitx
+
+def process_field(field_info):
+    """
+    Process a single astronomical field
+
+    Args:
+        field_info (dict): Dictionary containing field information
+    """
+    print(f"Processing field: {field_info['name']}")
+
+    result = core_galfitx(
+        image_name=field_info['image'],
+        weight_name=field_info['weight'],
+        kernel_name=field_info['kernel'],
+        image_list=field_info['images'],
+        outdir_list=field_info['output_dirs'],
+        filter_list=field_info['filters'],
+        label_list=field_info['labels'],
+        psf_list=field_info['psfs'],
+        zero_list=field_info['zeropoints'],
+        config=field_info['config']
+    )
+
+    print(f"Field {field_info['name']} completed with status: {result}")
+    return result
+
+# Define multiple fields to process
+fields = [
+    {
+        "name": "cosmos_field_1",
+        "image": "./data/cosmos/detection_1.fits",
+        "weight": "./data/cosmos/weight_1.fits",
+        "kernel": "./data/cosmos/kernel.txt",
+        "images": [
+            "./data/cosmos/acs_f814w_1.fits",
+            "./data/cosmos/wfc3_f160w_1.fits"
+        ],
+        "output_dirs": [
+            "./output/cosmos_1/acs/",
+            "./output/cosmos_1/wfc3/"
+        ],
+        "filters": ["F814W", "F160W"],
+        "labels": ["acs", "wfc3"],
+        "psfs": [
+            "./data/psfs/acs_f814w.fits",
+            "./data/psfs/wfc3_f160w.fits"
+        ],
+        "zeropoints": [25.96, 25.94],
+        "config": "./config/deep_field.toml"
+    },
+    {
+        "name": "cosmos_field_2",
+        "image": "./data/cosmos/detection_2.fits",
+        "weight": "./data/cosmos/weight_2.fits",
+        "kernel": "./data/cosmos/kernel.txt",
+        "images": [
+            "./data/cosmos/acs_f814w_2.fits",
+            "./data/cosmos/wfc3_f160w_2.fits"
+        ],
+        "output_dirs": [
+            "./output/cosmos_2/acs/",
+            "./output/cosmos_2/wfc3/"
+        ],
+        "filters": ["F814W", "F160W"],
+        "labels": ["acs", "wfc3"],
+        "psfs": [
+            "./data/psfs/acs_f814w.fits",
+            "./data/psfs/wfc3_f160w.fits"
+        ],
+        "zeropoints": [25.96, 25.94],
+        "config": "./config/deep_field.toml"
+    }
+]
+
+# Process all fields
+results = []
+for field in fields:
+    result = process_field(field)
+    results.append({
+        "field": field["name"],
+        "status": result
+    })
+
+# Print summary
+print("\n--- Processing Summary ---")
+for r in results:
+    print(f"{r['field']}: {'Success' if r['status'] == 1 else 'Failed'}")
+</code></pre>
+                </div>
+            </section>
+
+            <section class="example-card">
+                <h2>Data Format Requirements</h2>
+                <p>Examples of required input data formats:</p>
+
+                <h3>FITS Image Format</h3>
+                <p>Input images should be standard FITS files with proper astrometric calibration:</p>
+                <pre><code>Simple fits file format (single extension)
+BITPIX = -32
+NAXIS = 2
+NAXIS1 = 4096
+NAXIS2 = 4096
+CTYPE1 = 'RA---TAN'
+CTYPE2 = 'DEC--TAN'
+CRVAL1 = 150.12345
+CRVAL2 = 2.34567
+...</code></pre>
+
+                <h3>Kernel Format</h3>
+                <p>Kernel files should be ASCII with the following format:</p>
+                <pre><code># PSF kernel for convolution
+# Size: 25x25 pixels
+# FWHM: 2.3 pixels
+25
+0.001 0.002 0.003 ...
+0.002 0.004 0.005 ...
+...</code></pre>
+
+                <h3>PSF Format</h3>
+                <p>PSF files should be FITS files with normalized flux:</p>
+                <pre><code>FITS file with normalized PSF
+Total flux ≈ 1.0
+Proper WCS header
+Same pixel scale as science image</code></pre>
+            </section>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 GalfitX Project. Licensed under MIT License.</p>
+            <p>Created with ❤️ for the astronomy community</p>
+        </div>
+    </footer>
+</body>
+</html>

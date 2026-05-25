@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GalfitX Tutorials</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .tutorial-nav {
+            background-color: var(--light-color);
+            padding: 1rem;
+            margin-bottom: 2rem;
+            border-radius: 5px;
+        }
+
+        .tutorial-nav a {
+            margin-right: 1rem;
+            text-decoration: none;
+            color: var(--secondary-color);
+        }
+
+        .tutorial-section {
+            margin-bottom: 3rem;
+            padding: 1.5rem;
+            border-left: 4px solid var(--secondary-color);
+            background-color: #f8f9fa;
+        }
+
+        .step {
+            margin: 1.5rem 0;
+            padding: 1rem;
+            background-color: white;
+            border-radius: 5px;
+            box-shadow: var(--shadow);
+        }
+
+        .step-number {
+            display: inline-block;
+            background-color: var(--secondary-color);
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 30px;
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">
+                <h1>GalfitX</h1>
+            </div>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="api.html">API</a></li>
+                <li><a href="tutorials.html">Tutorials</a></li>
+                <li><a href="examples.html">Examples</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="tutorial-nav">
+            <a href="#getting-started">Getting Started</a> |
+            <a href="#basic-analysis">Basic Analysis</a> |
+            <a href="#advanced-usage">Advanced Usage</a>
+        </section>
+
+        <div class="container">
+            <h1>GalfitX Tutorials</h1>
+
+            <section id="getting-started" class="tutorial-section">
+                <h2>Getting Started with GalfitX</h2>
+                <p>This tutorial will guide you through the basic installation and first steps with GalfitX.</p>
+
+                <div class="step">
+                    <h3><span class="step-number">1</span> Prerequisites</h3>
+                    <p>Before installing GalfitX, ensure you have:</p>
+                    <ul>
+                        <li>Python 3.11 or higher</li>
+                        <li>GalfitS installed on your system</li>
+                        <li>Astronomical image files (FITS format)</li>
+                        <li>Weight maps for your images (optional but recommended)</li>
+                    </ul>
+                </div>
+
+                <div class="step">
+                    <h3><span class="step-number">2</span> Installation</h3>
+                    <p>First, clone the repository and install dependencies:</p>
+                    <pre><code># Clone the repository
+git clone https://github.com/pinsongzhao/zps-gx.git
+cd zps-gx
+
+# Install dependencies
+pip install -r requirements.txt
+
+# Install the package
+pip install -e .</code></pre>
+                </div>
+
+                <div class="step">
+                    <h3><span class="step-number">3</span> Prepare Input Files</h3>
+                    <p>You'll need several input files for the pipeline:</p>
+                    <ul>
+                        <li>Detection image (for source detection)</li>
+                        <li>Weight image (for noise estimation)</li>
+                        <li>Convolution kernel file</li>
+                        <li>Multiband science images</li>
+                        <li>PSF files for each band (if available)</li>
+                        <li>Configuration file (.toml)</li>
+                    </ul>
+                </div>
+
+                <div class="step">
+                    <h3><span class="step-number">4</span> Create Configuration File</h3>
+                    <p>Create a configuration file named <code>csst.toml</code>:</p>
+                    <pre><code>detect_minarea_cold = 5
+detect_minarea_hot = 5
+detect_thresh_cold = 1.5
+detect_thresh_hot = 2.0
+deblend = true
+deblend_nthresh_cold = 32
+deblend_nthresh_hot = 32
+deblend_mincont_cold = 0.005
+deblend_mincont_hot = 0.005
+clean = true
+back_type = "AUTO"
+back_value = 0.0
+back_size_cold = 64
+back_size_hot = 64
+back_filtersize = 3
+BACKGROUND = "WEIGHT"
+scale_factor = 1.0
+pixel_scale = 0.05
+sizefac = 8
+scale = 1.0
+offset = 0
+limgal = -1
+b = 0.3
+setup = "setup_file.conf"</code></pre>
+                </div>
+            </section>
+
+            <section id="basic-analysis" class="tutorial-section">
+                <h2>Basic Galaxy Analysis</h2>
+                <p>This tutorial covers how to run a basic galaxy decomposition analysis.</p>
+
+                <div class="step">
+                    <h3><span class="step-number">1</span> Prepare Your Data</h3>
+                    <p>Organize your data files:</p>
+                    <pre><code>your_analysis/
+├── detection_image.fits
+├── weight_image.fits
+├── kernel.txt
+├── band1_image.fits
+├── band2_image.fits
+├── psf_band1.fits
+├── psf_band2.fits
+└── config.toml</code></pre>
+                </div>
+
+                <div class="step">
+                    <h3><span class="step-number">2</span> Write Analysis Script</h3>
+                    <p>Create a Python script to run the analysis:</p>
+                    <pre><code>from galfitx import core_galfitx
+
+result = core_galfitx(
+    image_name="./detection_image.fits",
+    weight_name="./weight_image.fits",
+    kernel_name="./kernel.txt",
+    image_list=["./band1_image.fits", "./band2_image.fits"],
+    outdir_list=["./output/band1/", "./output/band2/"],
+    filter_list=["F475W", "F814W"],
+    label_list=["band1", "band2"],
+    psf_list=["./psf_band1.fits", "./psf_band2.fits"],
+    zero_list=[25.0, 25.0],
+    config="./config.toml"
+)</code></pre>
+                </div>
+
+                <div class="step">
+                    <h3><span class="step-number">3</span> Run the Analysis</h3>
+                    <p>Execute your script to start the analysis:</p>
+                    <pre><code>python your_analysis_script.py</code></pre>
+                </div>
+
+                <div class="step">
+                    <h3><span class="step-number">4</span> Examine Results</h3>
+                    <p>After completion, examine the results in the output directories. The pipeline generates:</p>
+                    <ul>
+                        <li>Postage stamps of detected sources</li>
+                        <li>Masks for neighboring objects</li>
+                        <li>Best-fit model images</li>
+                        <li>Residual images</li>
+                        <li>Fitted parameter files</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section id="advanced-usage" class="tutorial-section">
+                <h2>Advanced Usage Patterns</h2>
+                <p>This section covers more sophisticated usage of GalfitX.</p>
+
+                <div class="step">
+                    <h3><span class="step-number">1</span> Custom Component Models</h3>
+                    <p>To add custom component models, modify the setup files generated by <code>create_setup_gs.py</code>. You can add additional components such as bars, rings, or other structures beyond the basic Sersic profiles.</p>
+                </div>
+
+                <div class="step">
+                    <h3><span class="step-number">2</span> Multi-epoch Analysis</h3>
+                    <p>For multi-epoch data, create separate analysis runs or modify the pipeline to handle temporal variations. You can fix certain parameters across epochs while allowing others to vary.</p>
+                </div>
+
+                <div class="step">
+                    <h3><span class="step-number">3</span> Batch Processing</h3>
+                    <p>For large datasets, consider implementing batch processing:</p>
+                    <pre><code>import os
+from galfitx import core_galfitx
+
+def process_field(field_id, image_paths, weight_paths):
+    """Process a single field with multiple bands"""
+    for i, (img, wgt) in enumerate(zip(image_paths, weight_paths)):
+        result = core_galfitx(
+            image_name=img,
+            weight_name=wgt,
+            # ... other parameters
+        )
+
+# Process multiple fields in sequence
+fields = load_field_list()
+for field in fields:
+    process_field(field.id, field.images, field.weights)</code></pre>
+                </div>
+
+                <div class="step">
+                    <h3><span class="step-number">4</span> Custom Quality Control</h3>
+                    <p>Implement custom quality control routines to evaluate the goodness of fit:</p>
+                    <pre><code>from astropy.io import fits
+import numpy as np
+
+def evaluate_fit_quality(model_file, residual_file):
+    """Evaluate the quality of the fitted model"""
+    with fits.open(model_file) as model_hdu, fits.open(residual_file) as res_hdu:
+        model = model_hdu[0].data
+        residual = res_hdu[0].data
+
+        # Calculate reduced chi-square
+        chi_sq = np.sum((residual / np.sqrt(np.abs(model)))**2)
+        dof = residual.size - n_fitted_params  # degrees of freedom
+        reduced_chi_sq = chi_sq / dof
+
+        return reduced_chi_sq</code></pre>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 GalfitX Project. Licensed under MIT License.</p>
+            <p>Created with ❤️ for the astronomy community</p>
+        </div>
+    </footer>
+</body>
+</html>

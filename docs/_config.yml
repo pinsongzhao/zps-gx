@@ -1,0 +1,11 @@
+theme: jekyll-theme-minimal
+title: GalfitX Documentation
+description: Astronomical Image Processing Pipeline
+show_downloads: true
+google_analytics:
+defaults:
+  - scope:
+      path: ""
+      type: "pages"
+    values:
+      layout: "default"
