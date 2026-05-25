@@ -3,87 +3,50 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GalfitX API Documentation</title>
+    <title>API Reference - GalfitX</title>
     <link rel="stylesheet" href="styles.css">
-    <style>
-        .api-nav {
-            background-color: var(--light-color);
-            padding: 1rem;
-            margin-bottom: 2rem;
-            border-radius: 5px;
-        }
-
-        .api-nav a {
-            margin-right: 1rem;
-            text-decoration: none;
-            color: var(--secondary-color);
-        }
-
-        .module-section {
-            margin-bottom: 3rem;
-            padding-bottom: 2rem;
-            border-bottom: 1px solid #eee;
-        }
-
-        .function-def {
-            background-color: #f8f9fa;
-            padding: 1rem;
-            border-left: 4px solid var(--secondary-color);
-            margin: 1rem 0;
-        }
-
-        .param-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 1rem 0;
-        }
-
-        .param-table th, .param-table td {
-            border: 1px solid #ddd;
-            padding: 0.8rem;
-            text-align: left;
-        }
-
-        .param-table th {
-            background-color: var(--primary-color);
-            color: white;
-        }
-    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
 </head>
 <body>
-    <header>
-        <nav>
-            <div class="logo">
-                <h1>GalfitX</h1>
+    <nav class="navbar scrolled">
+        <div class="nav-container">
+            <div class="logo-container">
+                <div class="logo-icon">GX</div>
+                <div class="logo-text">Galfit<span class="highlight">X</span></div>
             </div>
-            <ul>
-                <li><a href="index.html">Home</a></li>
-                <li><a href="api.html">API</a></li>
-                <li><a href="tutorials.html">Tutorials</a></li>
-                <li><a href="examples.html">Examples</a></li>
+            <ul class="nav-menu">
+                <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
+                <li class="nav-item"><a href="api.html" class="nav-link">API</a></li>
+                <li class="nav-item"><a href="tutorials.html" class="nav-link">Tutorials</a></li>
+                <li class="nav-item"><a href="examples.html" class="nav-link">Examples</a></li>
             </ul>
-        </nav>
-    </header>
+            <div class="hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </nav>
 
-    <main>
-        <section class="api-nav">
-            <a href="#core-module">Core Module</a> |
-            <a href="#source-detection">Source Detection</a> |
-            <a href="#setup-generation">Setup Generation</a> |
-            <a href="#utilities">Utilities</a>
-        </section>
+    <div class="container" style="margin-top: 100px;">
+        <div class="section-header">
+            <h2>API Reference</h2>
+            <p>Comprehensive documentation for all GalfitX modules and functions</p>
+        </div>
 
-        <div class="container">
-            <h1>GalfitX API Reference</h1>
+        <div class="docs-content">
+            <div class="api-module">
+                <div class="module-header">
+                    <h3><i class="fas fa-cube"></i> Core Module: galfitx_main.py</h3>
+                    <p>Main pipeline module containing the core functionality</p>
+                </div>
 
-            <section id="core-module" class="module-section">
-                <h2>Core Module: galfitx_main.py</h2>
-
-                <h3>core_galfitx</h3>
-                <p>Main pipeline function that orchestrates the entire astronomical image processing workflow.</p>
-
-                <div class="function-def">
-                    <pre>core_galfitx(
+                <div class="api-function">
+                    <div class="function-header">
+                        <h4>core_galfitx</h4>
+                        <div class="function-signature">
+                            <code>core_galfitx(
     image_name: str = "/path/to/image",
     weight_name: str = "/path/to/weightimage",
     kernel_name: str = "/path/to/kernel",
@@ -94,83 +57,91 @@
     psf_list: List[str] = [],
     zero_list: List[float] = [],
     config: str = "./csst.toml",
-) -> int</pre>
+) -> int</code>
+                        </div>
+                    </div>
+
+                    <div class="function-description">
+                        <p>The main pipeline function that orchestrates the entire astronomical image processing workflow. It performs source detection, generates postage stamps, creates masks for neighboring objects, estimates local sky backgrounds, and runs GalfitS for morphological decomposition.</p>
+                    </div>
+
+                    <div class="function-parameters">
+                        <h5>Parameters</h5>
+                        <div class="parameter-list">
+                            <div class="parameter">
+                                <div class="param-name">image_name</div>
+                                <div class="param-type">str</div>
+                                <div class="param-desc">Path to detection image used for source finding</div>
+                            </div>
+                            <div class="parameter">
+                                <div class="param-name">weight_name</div>
+                                <div class="param-type">str</div>
+                                <div class="param-desc">Path to weight image for noise estimation</div>
+                            </div>
+                            <div class="parameter">
+                                <div class="param-name">kernel_name</div>
+                                <div class="param-type">str</div>
+                                <div class="param-desc">Path to convolution kernel file</div>
+                            </div>
+                            <div class="parameter">
+                                <div class="param-name">image_list</div>
+                                <div class="param-type">List[str]</div>
+                                <div class="param-desc">Paths to multi-band science images</div>
+                            </div>
+                            <div class="parameter">
+                                <div class="param-name">outdir_list</div>
+                                <div class="param-type">List[str]</div>
+                                <div class="param-desc">Paths to store multi-band postage stamps</div>
+                            </div>
+                            <div class="parameter">
+                                <div class="param-name">filter_list</div>
+                                <div class="param-type">List[str]</div>
+                                <div class="param-desc">Filter identifiers used for GalfitS</div>
+                            </div>
+                            <div class="parameter">
+                                <div class="param-name">label_list</div>
+                                <div class="param-type">List[str]</div>
+                                <div class="param-desc">Labels for each filter</div>
+                            </div>
+                            <div class="parameter">
+                                <div class="param-name">psf_list</div>
+                                <div class="param-type">List[str]</div>
+                                <div class="param-desc">Paths to multi-band input PSF images</div>
+                            </div>
+                            <div class="parameter">
+                                <div class="param-name">zero_list</div>
+                                <div class="param-type">List[float]</div>
+                                <div class="param-desc">Multi-band magnitude zeropoints</div>
+                            </div>
+                            <div class="parameter">
+                                <div class="param-name">config</div>
+                                <div class="param-type">str</div>
+                                <div class="param-desc">Path to configuration file</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="function-return">
+                        <h5>Returns</h5>
+                        <div class="return-value">
+                            <div class="return-type">int</div>
+                            <div class="return-desc">Status code indicating success (1) or failure (0)</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="api-module">
+                <div class="module-header">
+                    <h3><i class="fas fa-search"></i> Source Detection: source_detection.py</h3>
+                    <p>Advanced source detection algorithms with HDR capabilities</p>
                 </div>
 
-                <h4>Parameters</h4>
-                <table class="param-table">
-                    <tr>
-                        <th>Parameter</th>
-                        <th>Type</th>
-                        <th>Description</th>
-                    </tr>
-                    <tr>
-                        <td>image_name</td>
-                        <td>str</td>
-                        <td>Path to detection image</td>
-                    </tr>
-                    <tr>
-                        <td>weight_name</td>
-                        <td>str</td>
-                        <td>Path to weight image</td>
-                    </tr>
-                    <tr>
-                        <td>kernel_name</td>
-                        <td>str</td>
-                        <td>Path to convolution kernel file</td>
-                    </tr>
-                    <tr>
-                        <td>image_list</td>
-                        <td>List[str]</td>
-                        <td>Paths to multi-band science images</td>
-                    </tr>
-                    <tr>
-                        <td>outdir_list</td>
-                        <td>List[str]</td>
-                        <td>Paths to store multi-band postage stamps</td>
-                    </tr>
-                    <tr>
-                        <td>filter_list</td>
-                        <td>List[str]</td>
-                        <td>Filter identifiers used for GalfitS</td>
-                    </tr>
-                    <tr>
-                        <td>label_list</td>
-                        <td>List[str]</td>
-                        <td>Labels for each filter</td>
-                    </tr>
-                    <tr>
-                        <td>psf_list</td>
-                        <td>List[str]</td>
-                        <td>Paths to multi-band input PSF images</td>
-                    </tr>
-                    <tr>
-                        <td>zero_list</td>
-                        <td>List[float]</td>
-                        <td>Multi-band magnitude zeropoints</td>
-                    </tr>
-                    <tr>
-                        <td>config</td>
-                        <td>str</td>
-                        <td>Path to config file</td>
-                    </tr>
-                </table>
-
-                <h4>Returns</h4>
-                <p>int: Status code indicating success (1) or failure (0)</p>
-
-                <h4>Description</h4>
-                <p>The core_galfitx function implements a complete astronomical image processing pipeline. It performs source detection using SExtractor-based algorithms, extracts postage stamps around detected sources, generates masks for neighboring objects, estimates local sky backgrounds, and runs GalfitS to decompose galaxy morphologies.</p>
-            </section>
-
-            <section id="source-detection" class="module-section">
-                <h2>Source Detection: source_detection.py</h2>
-
-                <h3>SExtractor_HDR</h3>
-                <p>High Dynamic Range source detection algorithm with adaptive thresholding.</p>
-
-                <div class="function-def">
-                    <pre>SExtractor_HDR(
+                <div class="api-function">
+                    <div class="function-header">
+                        <h4>SExtractor_HDR</h4>
+                        <div class="function-signature">
+                            <code>SExtractor_HDR(
     image,
     kernel,
     detect_minarea,
@@ -188,27 +159,67 @@
     pixel_scale,
     mag_zeropoint,
     verbose=True,
-)</pre>
+)</code>
+                        </div>
+                    </div>
+
+                    <div class="function-description">
+                        <p>High Dynamic Range source detection algorithm with adaptive thresholding. Implements dual-mode processing to simultaneously detect both faint extended sources and bright compact objects.</p>
+                    </div>
+
+                    <div class="function-parameters">
+                        <h5>Parameters</h5>
+                        <div class="parameter-list">
+                            <div class="parameter">
+                                <div class="param-name">image</div>
+                                <div class="param-type">str or HDU</div>
+                                <div class="param-desc">Input image for source detection</div>
+                            </div>
+                            <div class="parameter">
+                                <div class="param-name">kernel</div>
+                                <div class="param-type">tuple</div>
+                                <div class="param-desc">Detection kernel for convolution</div>
+                            </div>
+                            <div class="parameter">
+                                <div class="param-name">detect_minarea</div>
+                                <div class="param-type">tuple</div>
+                                <div class="param-desc">Minimum detection area for cold/hot modes</div>
+                            </div>
+                            <div class="parameter">
+                                <div class="param-name">detect_thresh</div>
+                                <div class="param-type">tuple</div>
+                                <div class="param-desc">Detection thresholds for cold/hot modes</div>
+                            </div>
+                            <div class="parameter">
+                                <div class="param-name">deblend</div>
+                                <div class="param-type">tuple</div>
+                                <div class="param-desc">Enable deblending for cold/hot modes</div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
-                <h4>Description</h4>
-                <p>Implements an advanced source detection algorithm with dual-mode processing capabilities. Uses configurable detection thresholds and deblending parameters to handle complex astronomical scenes.</p>
+                <div class="api-function">
+                    <div class="function-header">
+                        <h4>SExtractor_dualmode</h4>
+                    </div>
+                    <div class="function-description">
+                        <p>Dual-mode source detection for simultaneous identification of faint and bright objects. Optimized for complex astronomical scenes with varying surface brightness.</p>
+                    </div>
+                </div>
+            </div>
 
-                <h3>SExtractor_dualmode</h3>
-                <p>Dual-mode source detection for simultaneous identification of faint and bright objects.</p>
+            <div class="api-module">
+                <div class="module-header">
+                    <h3><i class="fas fa-layer-group"></i> Setup Generation: create_setup_gs.py</h3>
+                    <p>Module for generating GalfitS configuration files</p>
+                </div>
 
-                <h4>Description</h4>
-                <p>Implements dual-mode detection algorithms that simultaneously apply different threshold settings to detect both faint extended objects and bright compact sources.</p>
-            </section>
-
-            <section id="setup-generation" class="module-section">
-                <h2>Setup Generation: create_setup_gs.py</h2>
-
-                <h3>prepare_galfits</h3>
-                <p>Generates GalfitS setup files for morphological fitting.</p>
-
-                <div class="function-def">
-                    <pre>prepare_galfits(
+                <div class="api-function">
+                    <div class="function-header">
+                        <h4>prepare_galfits</h4>
+                        <div class="function-signature">
+                            <code>prepare_galfits(
     image_stamp_list,
     catalog_name,
     output_name,
@@ -224,58 +235,155 @@
     objects=None,
     setup=None,
     sky0=True,
-)</pre>
+)</code>
+                        </div>
+                    </div>
+
+                    <div class="function-description">
+                        <p>Generates GalfitS setup files for morphological fitting. Creates configuration files with properly initialized parameters for each source in the catalog and handles multi-band setup generation.</p>
+                    </div>
                 </div>
 
-                <h4>Description</h4>
-                <p>Creates configuration files for GalfitS with properly initialized parameters for each source in the catalog. Handles multi-band setup generation and PSF preparation.</p>
+                <div class="api-function">
+                    <div class="function-header">
+                        <h4>process_psf</h4>
+                    </div>
+                    <div class="function-description">
+                        <p>Processes and prepares PSF files for multi-band fitting. Handles normalization and resampling to match observed images.</p>
+                    </div>
+                </div>
+            </div>
 
-                <h3>process_psf</h3>
-                <p>Processes and prepares PSF files for multi-band fitting.</p>
+            <div class="api-module">
+                <div class="module-header">
+                    <h3><i class="fas fa-cogs"></i> Utility Modules</h3>
+                    <p>Helper modules for specific tasks</p>
+                </div>
 
-                <h4>Description</h4>
-                <p>Handles the preparation of PSF files for each band, including normalization and resampling to match the observed images.</p>
-            </section>
+                <div class="utilities-grid">
+                    <div class="utility-card">
+                        <div class="utility-header">
+                            <h4>postage_stamp.py</h4>
+                        </div>
+                        <div class="utility-functions">
+                            <div class="utility-function">
+                                <code>create_stamp_file()</code>
+                                <p>Creates file with stamp coordinates</p>
+                            </div>
+                            <div class="utility-function">
+                                <code>cut_stamps()</code>
+                                <p>Extracts stamps from full images</p>
+                            </div>
+                        </div>
+                    </div>
 
-            <section id="utilities" class="module-section">
-                <h2>Utility Modules</h2>
+                    <div class="utility-card">
+                        <div class="utility-header">
+                            <h4>mask.py</h4>
+                        </div>
+                        <div class="utility-functions">
+                            <div class="utility-function">
+                                <code>create_mask()</code>
+                                <p>Generates masks for neighboring objects</p>
+                            </div>
+                            <div class="utility-function">
+                                <code>prepare_galfitm()</code>
+                                <p>Prepares masks for GalfitS</p>
+                            </div>
+                        </div>
+                    </div>
 
-                <h3>postage_stamp.py</h3>
-                <p>Functions for extracting and manipulating postage stamps:</p>
-                <ul>
-                    <li><strong>create_stamp_file</strong>: Creates file with stamp coordinates</li>
-                    <li><strong>cut_stamps</strong>: Extracts stamps from full images</li>
-                </ul>
+                    <div class="utility-card">
+                        <div class="utility-header">
+                            <h4>sky_calculation.py</h4>
+                        </div>
+                        <div class="utility-functions">
+                            <div class="utility-function">
+                                <code>getsky()</code>
+                                <p>Estimates local sky background</p>
+                            </div>
+                            <div class="utility-function">
+                                <code>create_skymap()</code>
+                                <p>Creates sky background maps</p>
+                            </div>
+                        </div>
+                    </div>
 
-                <h3>mask.py</h3>
-                <p>Functions for creating object masks:</p>
-                <ul>
-                    <li><strong>create_mask</strong>: Generates masks for neighboring objects</li>
-                    <li><strong>prepare_galfitm</strong>: Prepares masks for GalfitS</li>
-                </ul>
-
-                <h3>sky_calculation.py</h3>
-                <p>Functions for background estimation:</p>
-                <ul>
-                    <li><strong>getsky</strong>: Estimates local sky background</li>
-                    <li><strong>create_skymap</strong>: Creates sky background maps</li>
-                </ul>
-
-                <h3>read_setup.py</h3>
-                <p>Functions for reading and parsing configuration files:</p>
-                <ul>
-                    <li><strong>read_setup</strong>: Reads setup configuration files</li>
-                    <li><strong>set_trailing_slash</strong>: Ensures directory paths have trailing slashes</li>
-                </ul>
-            </section>
+                    <div class="utility-card">
+                        <div class="utility-header">
+                            <h4>read_setup.py</h4>
+                        </div>
+                        <div class="utility-functions">
+                            <div class="utility-function">
+                                <code>read_setup()</code>
+                                <p>Reads setup configuration files</p>
+                            </div>
+                            <div class="utility-function">
+                                <code>set_trailing_slash()</code>
+                                <p>Ensures directory paths have trailing slashes</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-    </main>
+    </div>
 
-    <footer>
+    <footer class="footer">
         <div class="container">
-            <p>&copy; 2026 GalfitX Project. Licensed under MIT License.</p>
-            <p>Created with ❤️ for the astronomy community</p>
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Galfit<span class="highlight">X</span></h3>
+                    <p>Advanced astronomical image processing for the modern era.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-github"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+
+                <div class="footer-section">
+                    <h4>Documentation</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="api.html">API Reference</a></li>
+                        <li><a href="tutorials.html">Tutorials</a></li>
+                        <li><a href="examples.html">Examples</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h4>Support</h4>
+                    <ul>
+                        <li><a href="#">GitHub Issues</a></li>
+                        <li><a href="#">Community Forum</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                        <li><a href="#">FAQ</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2026 GalfitX Project. Licensed under MIT License.</p>
+            </div>
         </div>
     </footer>
+
+    <script>
+        // Mobile menu toggle
+        const hamburger = document.querySelector('.hamburger');
+        const navMenu = document.querySelector('.nav-menu');
+
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            navMenu.classList.toggle('active');
+        });
+
+        // Close mobile menu when clicking on a link
+        document.querySelectorAll('.nav-link').forEach(n => n.addEventListener('click', () => {
+            hamburger.classList.remove('active');
+            navMenu.classList.remove('active');
+        }));
+    </script>
 </body>
 </html>

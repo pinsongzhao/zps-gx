@@ -3,185 +3,478 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GalfitX - Astronomical Image Processing Pipeline</title>
+    <title>GalfitX - Advanced Astronomical Image Processing</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
 </head>
 <body>
-    <header>
-        <nav>
-            <div class="logo">
-                <h1>GalfitX</h1>
+    <header class="hero-header">
+        <nav class="navbar">
+            <div class="nav-container">
+                <div class="logo-container">
+                    <div class="logo-icon">GX</div>
+                    <div class="logo-text">Galfit<span class="highlight">X</span></div>
+                </div>
+                <ul class="nav-menu">
+                    <li class="nav-item"><a href="#features" class="nav-link">Features</a></li>
+                    <li class="nav-item"><a href="#demo" class="nav-link">Demo</a></li>
+                    <li class="nav-item"><a href="#documentation" class="nav-link">Documentation</a></li>
+                    <li class="nav-item"><a href="#installation" class="nav-link">Installation</a></li>
+                    <li class="nav-item"><a href="#examples" class="nav-link">Examples</a></li>
+                </ul>
+                <div class="hamburger">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </div>
             </div>
-            <ul>
-                <li><a href="#home">Home</a></li>
-                <li><a href="#features">Features</a></li>
-                <li><a href="#installation">Installation</a></li>
-                <li><a href="#usage">Usage</a></li>
-                <li><a href="#api">API</a></li>
-                <li><a href="#contributing">Contributing</a></li>
-            </ul>
         </nav>
+
+        <div class="hero-content">
+            <div class="hero-text">
+                <h1>Advanced Astronomical <br><span class="gradient-text">Image Processing</span></h1>
+                <p>GalfitX is a sophisticated pipeline for multi-wavelength analysis, providing automated source detection, image decomposition, and photometry measurements.</p>
+                <div class="hero-buttons">
+                    <a href="#installation" class="btn btn-primary">Get Started</a>
+                    <a href="#demo" class="btn btn-secondary">View Demo</a>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <div class="visual-element">
+                    <div class="galaxy-cluster">
+                        <div class="galaxy-point"></div>
+                        <div class="galaxy-point point-2"></div>
+                        <div class="galaxy-point point-3"></div>
+                        <div class="galaxy-point point-4"></div>
+                        <div class="galaxy-point point-5"></div>
+                    </div>
+                    <div class="grid-overlay"></div>
+                </div>
+            </div>
+        </div>
     </header>
 
-    <main>
-        <section id="home" class="hero">
-            <div class="container">
-                <h1>GalfitX Documentation</h1>
-                <p>A sophisticated astronomical image processing pipeline for multi-wavelength analysis</p>
-                <a href="#getting-started" class="cta-button">Get Started</a>
+    <section id="features" class="features-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Powerful Features</h2>
+                <p>Designed for professional astronomical research with advanced capabilities</p>
             </div>
-        </section>
 
-        <section id="about" class="about">
-            <div class="container">
-                <h2>About GalfitX</h2>
-                <p>GalfitX is a powerful astronomical image processing pipeline that provides automated source detection, image decomposition, and photometry measurements across multiple wavelengths. It integrates the robust GalfitS modeling software with custom preprocessing and postprocessing utilities for comprehensive galaxy analysis.</p>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-search"></i>
+                    </div>
+                    <h3>Advanced Source Detection</h3>
+                    <p>Utilizes SExtractor-based algorithms with HDR capabilities for detecting both faint and bright objects in complex astronomical scenes.</p>
+                </div>
 
-                <div class="features-grid">
-                    <div class="feature-card">
-                        <h3>Multi-wavelength Analysis</h3>
-                        <p>Supports processing of multi-band imaging data with consistent calibration</p>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-layer-group"></i>
                     </div>
-                    <div class="feature-card">
-                        <h3>Automated Pipeline</h3>
-                        <p>Fully automated source detection and fitting procedures</p>
+                    <h3>Multi-Wavelength Analysis</h3>
+                    <p>Simultaneous processing of multi-band imaging data with consistent calibration and analysis.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-magic"></i>
                     </div>
-                    <div class="feature-card">
-                        <h3>Astronomical Focus</h3>
-                        <p>Specifically designed for galaxy morphology and photometric analysis</p>
+                    <h3>Galaxy Morphology</h3>
+                    <p>Precision modeling using integrated GalfitS for detailed morphological parameter estimation.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-chart-line"></i>
                     </div>
-                    <div class="feature-card">
-                        <h3>Modular Architecture</h3>
-                        <p>Flexible, component-based design allowing customization</p>
+                    <h3>Photometry</h3>
+                    <p>Accurate flux and magnitude measurements with sophisticated error analysis.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-cogs"></i>
+                    </div>
+                    <h3>Automated Pipeline</h3>
+                    <p>Complete end-to-end processing from detection to final measurements.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-expand-arrows-alt"></i>
+                    </div>
+                    <h3>Scalable Architecture</h3>
+                    <p>Modular design supporting parallel processing for large datasets.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="demo" class="demo-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Demo Showcase</h2>
+                <p>Explore the capabilities of GalfitX with our comprehensive demonstration</p>
+            </div>
+
+            <div class="demo-intro">
+                <h3>GalfitX Demo Walkthrough</h3>
+                <p>The <code>gxdemo.py</code> script demonstrates a complete multi-wavelength analysis workflow using JWST NIRCam data. This example showcases:</p>
+
+                <div class="demo-highlights">
+                    <div class="highlight-item">
+                        <i class="fas fa-star"></i>
+                        <div>
+                            <h4>Multi-band Processing</h4>
+                            <p>Analysis of 6 NIRCam bands from F115W to F444W</p>
+                        </div>
+                    </div>
+                    <div class="highlight-item">
+                        <i class="fas fa-star"></i>
+                        <div>
+                            <h4>Advanced Detection</h4>
+                            <p>HDR source detection with dual-mode thresholding</p>
+                        </div>
+                    </div>
+                    <div class="highlight-item">
+                        <i class="fas fa-star"></i>
+                        <div>
+                            <h4>Photometric Redshifts</h4>
+                            <p>Integration with EAZY for SED fitting</p>
+                        </div>
+                    </div>
+                    <div class="highlight-item">
+                        <i class="fas fa-star"></i>
+                        <div>
+                            <h4>Morphological Modeling</h4>
+                            <p>Joint image + SED fitting with GalfitS</p>
+                        </div>
                     </div>
                 </div>
             </div>
-        </section>
 
-        <section id="features" class="features">
-            <div class="container">
-                <h2>Key Features</h2>
-                <div class="feature-list">
-                    <div class="feature-item">
-                        <h3>Source Detection</h3>
-                        <p>Advanced detection algorithms using SExtractor-based methods with HDR capabilities</p>
+            <div class="demo-code">
+                <h3>Sample Demo Configuration</h3>
+                <pre><code class="language-python"># Multi-band NIRCam analysis example
+sciname_list = ['F444W_sci.fits', 'F356W_sci.fits', 'F277W_sci.fits',
+                'F200W_sci.fits', 'F150W_sci.fits', 'F115W_sci.fits']
+
+# Band labels and filters
+label_list = ['F444W', 'F356W', 'F277W', 'F200W', 'F150W', 'F115W']
+filter_list = ['nircam_f444w', 'nircam_f356w', 'nircam_f277w',
+               'nircam_f200w', 'nircam_f150w', 'nircam_f115w']
+
+# PSF files and zeropoints
+psf_list = ['./psfs/f444w_psf.fits', './psfs/f356w_psf.fits', ...]
+zero_list = [27.462, 27.462, 27.462, 28.967, 28.967, 28.967]
+
+# HDR Source Detection
+outtab, outsegm = SExtractor_HDR(detname,
+    kernel=(kernel, kernel),
+    detect_minarea=(25, 15),
+    detect_thresh=(3, 1.8),
+    deblend=(True, True),
+    # ... more parameters
+)</code></pre>
+            </div>
+
+            <div class="demo-workflow">
+                <h3>Demo Workflow Steps</h3>
+                <div class="workflow-steps">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <div class="step-content">
+                            <h4>Source Detection</h4>
+                            <p>Perform HDR detection using SExtractor with dual-mode thresholding</p>
+                        </div>
                     </div>
-                    <div class="feature-item">
-                        <h3>PSF Generation</h3>
-                        <p>Point Spread Function creation and handling for multiple bands</p>
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <div class="step-content">
+                            <h4>Stamp Creation</h4>
+                            <p>Generate postage stamps for all detected sources across all bands</p>
+                        </div>
                     </div>
-                    <div class="feature-item">
-                        <h3>Mask Creation</h3>
-                        <p>Automated generation of masks for neighboring objects</p>
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <div class="step-content">
+                            <h4>Mask Generation</h4>
+                            <p>Create masks for neighboring objects to minimize contamination</p>
+                        </div>
                     </div>
-                    <div class="feature-item">
-                        <h3>Sky Estimation</h3>
-                        <p>Accurate background subtraction algorithms</p>
+                    <div class="step">
+                        <div class="step-number">4</div>
+                        <div class="step-content">
+                            <h4>Model Fitting</h4>
+                            <p>Run GalfitS for morphological parameter estimation</p>
+                        </div>
                     </div>
-                    <div class="feature-item">
-                        <h3>Model Fitting</h3>
-                        <p>Integration with GalfitS for morphological parameter estimation</p>
+                    <div class="step">
+                        <div class="step-number">5</div>
+                        <div class="step-content">
+                            <h4>Photometric Redshifts</h4>
+                            <p>Derive photo-z using EAZY SED fitting</p>
+                        </div>
                     </div>
-                    <div class="feature-item">
-                        <h3>Photometry</h3>
-                        <p>Precise flux and magnitude calculations</p>
+                    <div class="step">
+                        <div class="step-number">6</div>
+                        <div class="step-content">
+                            <h4>Combined Analysis</h4>
+                            <p>Perform joint image + SED fitting</p>
+                        </div>
                     </div>
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <section id="installation" class="installation">
-            <div class="container">
-                <h2>Installation</h2>
-                <div class="install-steps">
-                    <h3>Prerequisites</h3>
+    <section id="documentation" class="docs-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Comprehensive Documentation</h2>
+                <p>Learn everything about GalfitX from basic usage to advanced features</p>
+            </div>
+
+            <div class="docs-grid">
+                <div class="doc-category">
+                    <h3><i class="fas fa-book"></i> Core Concepts</h3>
                     <ul>
-                        <li>Python 3.11 or higher</li>
-                        <li>GalfitS (external dependency)</li>
+                        <li><a href="#api">API Reference</a></li>
+                        <li><a href="#architecture">Architecture</a></li>
+                        <li><a href="#configuration">Configuration</a></li>
+                        <li><a href="#workflow">Processing Workflow</a></li>
                     </ul>
+                </div>
 
-                    <h3>Dependencies</h3>
-                    <p>The project requires the following packages:</p>
-                    <pre><code>astropy==6.0.0
-matplotlib==3.10.8
-numba==0.60.0
-numpy==1.26.4
-pandas==3.0.1
-photutils==2.3.0
-reproject==0.14.1
-scipy==1.17.1
-toml==0.10.2
-tqdm==4.66.5</code></pre>
+                <div class="doc-category">
+                    <h3><i class="fas fa-code"></i> Developer Guide</h3>
+                    <ul>
+                        <li><a href="#integration">System Integration</a></li>
+                        <li><a href="#modules">Module Reference</a></li>
+                        <li><a href="#extending">Extending GalfitX</a></li>
+                        <li><a href="#contributing">Contributing</a></li>
+                    </ul>
+                </div>
 
-                    <h3>Installation Steps</h3>
-                    <ol>
-                        <li>Clone the repository:
-                            <pre><code>git clone https://github.com/pinsongzhao/zps-gx.git
-cd zps-gx</code></pre>
-                        </li>
-                        <li>Install dependencies:
-                            <pre><code>pip install -r requirements.txt</code></pre>
-                        </li>
-                        <li>Install the package:
-                            <pre><code>pip install -e .</code></pre>
-                        </li>
-                    </ol>
+                <div class="doc-category">
+                    <h3><i class="fas fa-cogs"></i> Technical Details</h3>
+                    <ul>
+                        <li><a href="#algorithms">Algorithms</a></li>
+                        <li><a href="#performance">Performance</a></li>
+                        <li><a href="#accuracy">Accuracy</a></li>
+                        <li><a href="#validation">Validation</a></li>
+                    </ul>
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <section id="usage" class="usage">
-            <div class="container">
-                <h2>Usage Examples</h2>
-                <div class="code-example">
-                    <h3>Basic Usage</h3>
-                    <p>The primary usage pattern involves preparing inputs and calling the core pipeline:</p>
-                    <pre><code>from galfitx import core_galfitx
+    <section id="installation" class="install-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Quick Start</h2>
+                <p>Get GalfitX up and running in minutes</p>
+            </div>
+
+            <div class="install-steps">
+                <div class="step-card">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h3>Prerequisites</h3>
+                        <div class="prereq-list">
+                            <div class="prereq-item">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Python 3.11+</span>
+                            </div>
+                            <div class="prereq-item">
+                                <i class="fas fa-check-circle"></i>
+                                <span>GalfitS installation</span>
+                            </div>
+                            <div class="prereq-item">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Astronomical image data (FITS format)</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="step-card">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h3>Installation</h3>
+                        <pre><code class="language-bash"># Clone the repository
+git clone https://github.com/pinsongzhao/zps-gx.git
+cd zps-gx
+
+# Install dependencies
+pip install -r requirements.txt
+
+# Install the package
+pip install -e .</code></pre>
+                    </div>
+                </div>
+
+                <div class="step-card">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h3>Configuration</h3>
+                        <pre><code class="language-toml"># csst.toml
+detect_minarea_cold = 5
+detect_minarea_hot = 5
+detect_thresh_cold = 1.5
+detect_thresh_hot = 2.0
+deblend = true
+# ... more configuration</code></pre>
+                    </div>
+                </div>
+
+                <div class="step-card">
+                    <div class="step-number">4</div>
+                    <div class="step-content">
+                        <h3>Run Analysis</h3>
+                        <pre><code class="language-python">from galfitx import core_galfitx
 
 result = core_galfitx(
-    image_name="/path/to/detection_image.fits",
-    weight_name="/path/to/weight_image.fits",
-    kernel_name="/path/to/kernel.txt",
-    image_list=["/path/to/band1.fits", "/path/to/band2.fits"],
-    outdir_list=["./output/band1/", "./output/band2/"],
-    filter_list=["F475W", "F814W"],
-    label_list=["band1", "band2"],
-    psf_list=["/path/to/psf1.fits", "/path/to/psf2.fits"],
-    zero_list=[25.0, 25.0],
-    config="./config.toml"
+    image_name="./detection.fits",
+    weight_name="./weight.fits",
+    # ... configure parameters
 )</code></pre>
+                    </div>
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <section id="api" class="api">
-            <div class="container">
-                <h2>API Reference</h2>
-                <div class="api-section">
-                    <h3>core_galfitx function</h3>
-                    <p>Main entry point for the pipeline with the following parameters:</p>
+    <section id="examples" class="examples-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Real-World Examples</h2>
+                <p>See GalfitX in action with practical use cases</p>
+            </div>
+
+            <div class="examples-grid">
+                <div class="example-card">
+                    <div class="example-header">
+                        <h3><i class="fas fa-globe-americas"></i> Galaxy Morphology</h3>
+                        <p>Decomposing galaxy structures across Hubble types</p>
+                    </div>
+                    <div class="example-content">
+                        <p>Measure structural parameters including Sersic index, effective radius, and axis ratio for galaxies ranging from dwarfs to massive ellipticals.</p>
+                    </div>
+                </div>
+
+                <div class="example-card">
+                    <div class="example-header">
+                        <h3><i class="fas fa-stars"></i> Star Formation History</h3>
+                        <p>Combining imaging with SED fitting</p>
+                    </div>
+                    <div class="example-content">
+                        <p>Joint analysis of morphological and photometric properties to understand galaxy evolution and star formation histories.</p>
+                    </div>
+                </div>
+
+                <div class="example-card">
+                    <div class="example-header">
+                        <h3><i class="fas fa-meteor"></i> Transient Detection</h3>
+                        <p>Identifying variable and transient objects</p>
+                    </div>
+                    <div class="example-content">
+                        <p>Using difference imaging and morphological analysis to detect supernovae and other transient phenomena.</p>
+                    </div>
+                </div>
+
+                <div class="example-card">
+                    <div class="example-header">
+                        <h3><i class="fas fa-ring"></i> Gravitational Lensing</h3>
+                        <p>Analyzing lensed galaxies and arcs</p>
+                    </div>
+                    <div class="example-content">
+                        <p>Measuring distortion and magnification effects in gravitational lensing systems.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Galfit<span class="highlight">X</span></h3>
+                    <p>Advanced astronomical image processing for the modern era.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-github"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+
+                <div class="footer-section">
+                    <h4>Resources</h4>
                     <ul>
-                        <li><strong>image_name</strong>: Path to detection image</li>
-                        <li><strong>weight_name</strong>: Path to weight image</li>
-                        <li><strong>kernel_name</strong>: Path to convolution kernel file</li>
-                        <li><strong>image_list</strong>: Paths to multi-band science images</li>
-                        <li><strong>outdir_list</strong>: Directories to store multi-band postage stamps</li>
-                        <li><strong>filter_list</strong>: Filter identifiers for GalfitS</li>
-                        <li><strong>label_list</strong>: Labels for each filter</li>
-                        <li><strong>psf_list</strong>: Paths to multi-band input PSF images</li>
-                        <li><strong>zero_list</strong>: Multi-band magnitude zeropoints</li>
-                        <li><strong>config</strong>: Path to configuration file</li>
+                        <li><a href="#documentation">Documentation</a></li>
+                        <li><a href="#api">API Reference</a></li>
+                        <li><a href="#tutorials">Tutorials</a></li>
+                        <li><a href="#examples">Examples</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h4>Support</h4>
+                    <ul>
+                        <li><a href="#">GitHub Issues</a></li>
+                        <li><a href="#">Community Forum</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                        <li><a href="#">FAQ</a></li>
                     </ul>
                 </div>
             </div>
-        </section>
-    </main>
 
-    <footer>
-        <div class="container">
-            <p>&copy; 2026 GalfitX Project. Licensed under MIT License.</p>
-            <p>Created with ❤️ for the astronomy community</p>
+            <div class="footer-bottom">
+                <p>&copy; 2026 GalfitX Project. Licensed under MIT License.</p>
+            </div>
         </div>
     </footer>
+
+    <script>
+        // Mobile menu toggle
+        const hamburger = document.querySelector('.hamburger');
+        const navMenu = document.querySelector('.nav-menu');
+
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            navMenu.classList.toggle('active');
+        });
+
+        // Close mobile menu when clicking on a link
+        document.querySelectorAll('.nav-link').forEach(n => n.addEventListener('click', () => {
+            hamburger.classList.remove('active');
+            navMenu.classList.remove('active');
+        }));
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Add scroll effect to navbar
+        window.addEventListener('scroll', () => {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+    </script>
 </body>
 </html>

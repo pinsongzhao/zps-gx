@@ -3,378 +3,432 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GalfitX Examples</title>
+    <title>Examples - GalfitX</title>
     <link rel="stylesheet" href="styles.css">
-    <style>
-        .example-nav {
-            background-color: var(--light-color);
-            padding: 1rem;
-            margin-bottom: 2rem;
-            border-radius: 5px;
-        }
-
-        .example-nav a {
-            margin-right: 1rem;
-            text-decoration: none;
-            color: var(--secondary-color);
-        }
-
-        .example-card {
-            background-color: white;
-            margin: 1.5rem 0;
-            padding: 1.5rem;
-            border-radius: 8px;
-            box-shadow: var(--shadow);
-        }
-
-        .code-block {
-            background-color: #2d3748;
-            color: #e2e8f0;
-            padding: 1rem;
-            border-radius: 5px;
-            overflow-x: auto;
-            margin: 1rem 0;
-        }
-
-        .output-block {
-            background-color: #f7fafc;
-            border: 1px solid #e2e8f0;
-            padding: 1rem;
-            border-radius: 5px;
-            margin: 1rem 0;
-        }
-    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
 </head>
 <body>
-    <header>
-        <nav>
-            <div class="logo">
-                <h1>GalfitX</h1>
+    <nav class="navbar scrolled">
+        <div class="nav-container">
+            <div class="logo-container">
+                <div class="logo-icon">GX</div>
+                <div class="logo-text">Galfit<span class="highlight">X</span></div>
             </div>
-            <ul>
-                <li><a href="index.html">Home</a></li>
-                <li><a href="api.html">API</a></li>
-                <li><a href="tutorials.html">Tutorials</a></li>
-                <li><a href="examples.html">Examples</a></li>
+            <ul class="nav-menu">
+                <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
+                <li class="nav-item"><a href="api.html" class="nav-link">API</a></li>
+                <li class="nav-item"><a href="tutorials.html" class="nav-link">Tutorials</a></li>
+                <li class="nav-item"><a href="examples.html" class="nav-link">Examples</a></li>
             </ul>
-        </nav>
-    </header>
-
-    <main>
-        <section class="example-nav">
-            <a href="#basic-example">Basic Example</a> |
-            <a href="#multiband">Multi-band Analysis</a> |
-            <a href="#custom-parameters">Custom Parameters</a> |
-            <a href="#batch-processing">Batch Processing</a>
-        </section>
-
-        <div class="container">
-            <h1>GalfitX Examples</h1>
-
-            <section id="basic-example" class="example-card">
-                <h2>Basic Usage Example</h2>
-                <p>A simple example showing how to run GalfitX on a single image.</p>
-
-                <div class="code-block">
-                    <pre><code>from galfitx import core_galfitx
-
-# Define input files
-image_name = "./data/hst_acs_f814w.fits"
-weight_name = "./data/hst_acs_f814w_weight.fits"
-kernel_name = "./data/acs_kernel.txt"
-
-# Define multi-band images (in this case, just one band)
-image_list = [image_name]
-outdir_list = ["./output/stamps/"]
-filter_list = ["F814W"]
-label_list = ["acs"]
-psf_list = ["./data/acs_psf.fits"]
-zero_list = [25.96]  # ACS F814W zeropoint
-
-# Run the pipeline
-result = core_galfitx(
-    image_name=image_name,
-    weight_name=weight_name,
-    kernel_name=kernel_name,
-    image_list=image_list,
-    outdir_list=outdir_list,
-    filter_list=filter_list,
-    label_list=label_list,
-    psf_list=psf_list,
-    zero_list=zero_list,
-    config="./config/csst.toml"
-)
-
-print(f"Pipeline completed with status: {result}")
-</code></pre>
-                </div>
-
-                <div class="output-block">
-                    <h3>Expected Output</h3>
-                    <p>After running the basic example, you should see output similar to:</p>
-                    <pre><code>Source detection completed: 1247 sources found
-Creating stamps for 1247 sources...
-Processing in brightness order...
-Running GalfitS on source 1/1247
-Running GalfitS on source 2/1247
-...
-Pipeline completed with status: 1</code></pre>
-                </div>
-            </section>
-
-            <section id="multiband" class="example-card">
-                <h2>Multi-band Analysis</h2>
-                <p>Example of analyzing the same region across multiple wavelength bands.</p>
-
-                <div class="code-block">
-                    <pre><code>from galfitx import core_galfitx
-
-# Multi-band data
-detection_img = "./data/hst_detection.fits"  # Deepest band for detection
-weight_img = "./data/hst_detection_weight.fits"
-
-# All bands to be analyzed jointly
-image_list = [
-    "./data/hst_acs_f475w.fits",  # B-band equivalent
-    "./data/hst_acs_f814w.fits",  # I-band equivalent
-    "./data/hst_wfc3_f125w.fits", # J-band equivalent
-    "./data/hst_wfc3_f160w.fits"  # H-band equivalent
-]
-
-outdir_list = [
-    "./output/acs_f475w/",
-    "./output/acs_f814w/",
-    "./output/wfc3_f125w/",
-    "./output/wfc3_f160w/"
-]
-
-filter_list = ["F475W", "F814W", "F125W", "F160W"]
-label_list = ["b", "i", "j", "h"]
-
-psf_list = [
-    "./data/psf_acs_f475w.fits",
-    "./data/psf_acs_f814w.fits",
-    "./data/psf_wfc3_f125w.fits",
-    "./data/psf_wfc3_f160w.fits"
-]
-
-# Zeropoints for each band
-zero_list = [26.05, 25.96, 26.25, 25.94]
-
-result = core_galfitx(
-    image_name=detection_img,
-    weight_name=weight_img,
-    kernel_name="./data/joint_kernel.txt",
-    image_list=image_list,
-    outdir_list=outdir_list,
-    filter_list=filter_list,
-    label_list=label_list,
-    psf_list=psf_list,
-    zero_list=zero_list,
-    config="./config/multiband.toml"
-)
-</code></pre>
-                </div>
-            </section>
-
-            <section id="custom-parameters" class="example-card">
-                <h2>Custom Configuration Example</h2>
-                <p>Using custom parameters for specific analysis needs.</p>
-
-                <div class="code-block">
-                    <pre><code>from galfitx import core_galfitx
-import toml
-
-# Create custom configuration
-config_data = {
-    "detect_minarea_cold": 8,
-    "detect_minarea_hot": 8,
-    "detect_thresh_cold": 1.2,
-    "detect_thresh_hot": 1.8,
-    "deblend": True,
-    "deblend_nthresh_cold": 64,
-    "deblend_nthresh_hot": 64,
-    "deblend_mincont_cold": 0.003,
-    "deblend_mincont_hot": 0.003,
-    "clean": True,
-    "back_type": "AUTO",
-    "back_value": 0.0,
-    "back_size_cold": 128,
-    "back_size_hot": 128,
-    "back_filtersize": 3,
-    "BACKGROUND": "WEIGHT",
-    "scale_factor": 1.0,
-    "pixel_scale": 0.05,  # ACS pixel scale
-    "sizefac": 10,  # Larger stamps for extended galaxies
-    "scale": 1.0,
-    "offset": 0,
-    "limgal": -1,
-    "b": 0.3,
-    "setup": "custom_setup.conf"
-}
-
-# Save custom configuration
-with open('./config/custom_config.toml', 'w') as f:
-    toml.dump(config_data, f)
-
-# Run with custom config
-result = core_galfitx(
-    image_name="./data/deep_field.fits",
-    weight_name="./data/deep_field_weight.fits",
-    kernel_name="./data/custom_kernel.txt",
-    image_list=["./data/deep_field.fits"],
-    outdir_list=["./output/deep_custom/"],
-    filter_list=["custom"],
-    label_list=["deep"],
-    psf_list=["./data/deep_field_psf.fits"],
-    zero_list=[25.5],
-    config="./config/custom_config.toml"
-)
-</code></pre>
-                </div>
-            </section>
-
-            <section id="batch-processing" class="example-card">
-                <h2>Batch Processing Example</h2>
-                <p>Processing multiple fields or datasets in batch mode.</p>
-
-                <div class="code-block">
-                    <pre><code>import os
-from pathlib import Path
-from galfitx import core_galfitx
-
-def process_field(field_info):
-    """
-    Process a single astronomical field
-
-    Args:
-        field_info (dict): Dictionary containing field information
-    """
-    print(f"Processing field: {field_info['name']}")
-
-    result = core_galfitx(
-        image_name=field_info['image'],
-        weight_name=field_info['weight'],
-        kernel_name=field_info['kernel'],
-        image_list=field_info['images'],
-        outdir_list=field_info['output_dirs'],
-        filter_list=field_info['filters'],
-        label_list=field_info['labels'],
-        psf_list=field_info['psfs'],
-        zero_list=field_info['zeropoints'],
-        config=field_info['config']
-    )
-
-    print(f"Field {field_info['name']} completed with status: {result}")
-    return result
-
-# Define multiple fields to process
-fields = [
-    {
-        "name": "cosmos_field_1",
-        "image": "./data/cosmos/detection_1.fits",
-        "weight": "./data/cosmos/weight_1.fits",
-        "kernel": "./data/cosmos/kernel.txt",
-        "images": [
-            "./data/cosmos/acs_f814w_1.fits",
-            "./data/cosmos/wfc3_f160w_1.fits"
-        ],
-        "output_dirs": [
-            "./output/cosmos_1/acs/",
-            "./output/cosmos_1/wfc3/"
-        ],
-        "filters": ["F814W", "F160W"],
-        "labels": ["acs", "wfc3"],
-        "psfs": [
-            "./data/psfs/acs_f814w.fits",
-            "./data/psfs/wfc3_f160w.fits"
-        ],
-        "zeropoints": [25.96, 25.94],
-        "config": "./config/deep_field.toml"
-    },
-    {
-        "name": "cosmos_field_2",
-        "image": "./data/cosmos/detection_2.fits",
-        "weight": "./data/cosmos/weight_2.fits",
-        "kernel": "./data/cosmos/kernel.txt",
-        "images": [
-            "./data/cosmos/acs_f814w_2.fits",
-            "./data/cosmos/wfc3_f160w_2.fits"
-        ],
-        "output_dirs": [
-            "./output/cosmos_2/acs/",
-            "./output/cosmos_2/wfc3/"
-        ],
-        "filters": ["F814W", "F160W"],
-        "labels": ["acs", "wfc3"],
-        "psfs": [
-            "./data/psfs/acs_f814w.fits",
-            "./data/psfs/wfc3_f160w.fits"
-        ],
-        "zeropoints": [25.96, 25.94],
-        "config": "./config/deep_field.toml"
-    }
-]
-
-# Process all fields
-results = []
-for field in fields:
-    result = process_field(field)
-    results.append({
-        "field": field["name"],
-        "status": result
-    })
-
-# Print summary
-print("\n--- Processing Summary ---")
-for r in results:
-    print(f"{r['field']}: {'Success' if r['status'] == 1 else 'Failed'}")
-</code></pre>
-                </div>
-            </section>
-
-            <section class="example-card">
-                <h2>Data Format Requirements</h2>
-                <p>Examples of required input data formats:</p>
-
-                <h3>FITS Image Format</h3>
-                <p>Input images should be standard FITS files with proper astrometric calibration:</p>
-                <pre><code>Simple fits file format (single extension)
-BITPIX = -32
-NAXIS = 2
-NAXIS1 = 4096
-NAXIS2 = 4096
-CTYPE1 = 'RA---TAN'
-CTYPE2 = 'DEC--TAN'
-CRVAL1 = 150.12345
-CRVAL2 = 2.34567
-...</code></pre>
-
-                <h3>Kernel Format</h3>
-                <p>Kernel files should be ASCII with the following format:</p>
-                <pre><code># PSF kernel for convolution
-# Size: 25x25 pixels
-# FWHM: 2.3 pixels
-25
-0.001 0.002 0.003 ...
-0.002 0.004 0.005 ...
-...</code></pre>
-
-                <h3>PSF Format</h3>
-                <p>PSF files should be FITS files with normalized flux:</p>
-                <pre><code>FITS file with normalized PSF
-Total flux ≈ 1.0
-Proper WCS header
-Same pixel scale as science image</code></pre>
-            </section>
+            <div class="hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
         </div>
-    </main>
+    </nav>
 
-    <footer>
+    <div class="container" style="margin-top: 100px;">
+        <div class="section-header">
+            <h2>Real-World Examples</h2>
+            <p>See GalfitX in action with practical use cases and demonstrations</p>
+        </div>
+
+        <div class="examples-content">
+            <div class="example-category">
+                <h3><i class="fas fa-jedi"></i> Galaxy Morphology Analysis</h3>
+                <p>Understanding the shapes, structures, and evolution of galaxies</p>
+
+                <div class="example-cards">
+                    <div class="example-card detailed">
+                        <div class="example-header">
+                            <h4>Early-Type Galaxy Decomposition</h4>
+                            <div class="example-meta">
+                                <span class="difficulty advanced"><i class="fas fa-bolt"></i> Advanced</span>
+                                <span class="time"><i class="far fa-clock"></i> 45 min</span>
+                            </div>
+                        </div>
+
+                        <div class="example-content">
+                            <p>Analyze a massive elliptical galaxy using bulge+disk decomposition models. This example demonstrates how to fit complex light profiles with GalfitX.</p>
+
+                            <div class="code-example">
+                                <h5>Configuration Setup</h5>
+                                <pre><code class="language-python"># Early-type galaxy analysis
+config = {
+    "detect_minarea_cold": 25,
+    "detect_thresh_cold": 2.0,
+    "deblend": False,  # No deblending for isolated galaxies
+    "sizefac": 12,  # Larger stamps for extended galaxies
+    "setup_components": ["sersic"]  # Just a single Sersic component
+}</code></pre>
+                            </div>
+
+                            <div class="result-preview">
+                                <h5>Expected Results</h5>
+                                <ul>
+                                    <li>Sersic index (n) characterizing the light profile shape</li>
+                                    <li>Effective radius (reff) in arcseconds</li>
+                                    <li>Total magnitude and concentration index</li>
+                                    <li>Axis ratio and position angle</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="example-card detailed">
+                        <div class="example-header">
+                            <h4>Spiral Galaxy Structure Analysis</h4>
+                            <div class="example-meta">
+                                <span class="difficulty intermediate"><i class="fas fa-bolt"></i> Intermediate</span>
+                                <span class="time"><i class="far fa-clock"></i> 30 min</span>
+                            </div>
+                        </div>
+
+                        <div class="example-content">
+                            <p>Fit spiral galaxies with bulge+disk models to separate the contributions of the bulge and disk components to the total luminosity.</p>
+
+                            <div class="code-example">
+                                <h5>Bulge-Disk Decomposition</h5>
+                                <pre><code class="language-python">from galfitx import core_galfitx
+
+# Spiral galaxy analysis with two components
+result = core_galfitx(
+    image_name="./spiral_galaxy.fits",
+    weight_name="./spiral_weight.fits",
+    kernel_name="./gauss_kernel.txt",
+    image_list=["./spiral_galaxy.fits"],
+    outdir_list=["./spiral_output/"],
+    filter_list=["r"],
+    label_list=["sdss"],
+    psf_list=["./psf_r_band.fits"],
+    zero_list=[22.5],
+    config="./bulge_disk_config.toml"
+)</code></pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="example-category">
+                <h3><i class="fas fa-star"></i> Multi-Band Joint Analysis</h3>
+                <p>Analyze the same sources across multiple wavelength bands simultaneously</p>
+
+                <div class="example-cards">
+                    <div class="example-card detailed">
+                        <div class="example-header">
+                            <h4>JWST NIRCam Deep Field Analysis</h4>
+                            <div class="example-meta">
+                                <span class="difficulty advanced"><i class="fas fa-bolt"></i> Advanced</span>
+                                <span class="time"><i class="far fa-clock"></i> 120 min</span>
+                            </div>
+                        </div>
+
+                        <div class="example-content">
+                            <p>Complete analysis of a deep field observed with JWST NIRCam across 6 bands (F115W to F444W) as demonstrated in the gxdemo.py script.</p>
+
+                            <div class="code-example">
+                                <h5>Multi-band Configuration</h5>
+                                <pre><code class="language-python"># Multi-band NIRCam analysis
+sciname_list = ['F444W_sci.fits', 'F356W_sci.fits', 'F277W_sci.fits',
+                'F200W_sci.fits', 'F150W_sci.fits', 'F115W_sci.fits']
+
+label_list = ['F444W', 'F356W', 'F277W', 'F200W', 'F150W', 'F115W']
+filter_list = ['nircam_f444w', 'nircam_f356w', 'nircam_f277w',
+               'nircam_f200w', 'nircam_f150w', 'nircam_f115w']
+
+# PSF files and zeropoints
+psf_list = ['./psfs/f444w_psf.fits', './psfs/f356w_psf.fits',
+            './psfs/f277w_psf.fits', './psfs/f200w_psf.fits',
+            './psfs/f150w_psf.fits', './psfs/f115w_psf.fits']
+
+zero_list = [27.462, 27.462, 27.462, 28.967, 28.967, 28.967]</code></pre>
+                            </div>
+
+                            <div class="result-preview">
+                                <h5>Workflow Steps</h5>
+                                <ol>
+                                    <li>HDR source detection with dual-mode thresholding</li>
+                                    <li>Postage stamp creation for all sources and bands</li>
+                                    <li>Neighboring object masking to minimize contamination</li>
+                                    <li>Joint GalfitS modeling across all bands</li>
+                                    <li>Photometric redshift derivation with EAZY</li>
+                                    <li>SED fitting and physical property determination</li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="example-category">
+                <h3><i class="fas fa-project-diagram"></i> Specialized Applications</h3>
+                <p>Advanced use cases and specialized analyses</p>
+
+                <div class="example-cards">
+                    <div class="example-card detailed">
+                        <div class="example-header">
+                            <h4>Gravitational Lensing Analysis</h4>
+                            <div class="example-meta">
+                                <span class="difficulty advanced"><i class="fas fa-bolt"></i> Advanced</span>
+                                <span class="time"><i class="far fa-clock"></i> 90 min</span>
+                            </div>
+                        </div>
+
+                        <div class="example-content">
+                            <p>Analyze lensed galaxies and Einstein rings using specialized model components and constraints.</p>
+
+                            <div class="code-example">
+                                <h5>Lensing Model Setup</h5>
+                                <pre><code class="language-python"># Gravitational lensing model with external shear
+lens_config = {
+    "components": ["lensed_sersic", "shear_field"],
+    "constraints": {
+        "positions_locked": True,  # Lens position fixed
+        "multiplicative_shear": True,  # Apply shear distortions
+        "flexible_profiles": True  # Allow variable Sersic indices
+    },
+    "sampling_options": {
+        "oversample_factor": 4,  # Higher resolution sampling
+        "psf_convolution": True  # Proper PSF convolution
+    }
+}</code></pre>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="example-card detailed">
+                        <div class="example-header">
+                            <h4>Star Formation History Reconstruction</h4>
+                            <div class="example-meta">
+                                <span class="difficulty advanced"><i class="fas fa-bolt"></i> Advanced</span>
+                                <span class="time"><i class="far fa-clock"></i> 180 min</span>
+                            </div>
+                        </div>
+
+                        <div class="example-content">
+                            <p>Combine morphological analysis with SED fitting to reconstruct star formation histories.</p>
+
+                            <div class="code-example">
+                                <h5>Integrated Analysis Pipeline</h5>
+                                <pre><code class="language-python">from galfitx.model_isoflux import PhotometryPipeline
+from galfitx.eazy_utils import run_eazy
+
+# Step 1: Morphological analysis
+iso_config = PhotometryConfig(
+    image_list=sciname_list,
+    galaxy_catalog=catalog_name,
+    psf_file=psf_file,
+    label_list=label_list,
+    filter_labels=filter_list,
+    # ... other parameters
+)
+
+iso_pipeline = PhotometryPipeline(iso_config)
+bg_params = iso_pipeline.step2_fit_background_noise()
+
+# Step 2: SED fitting with EAZY
+for galaxy_id in selected_galaxies:
+    # Derive photometry from morphological fits
+    photometry = extract_photometry(galaxy_id, iso_pipeline)
+
+    # Run EAZY for SED fitting
+    zphot_result = run_eazy(photometry, config_file)
+
+    # Combine morphological and SED results
+    combined_results = integrate_morphology_sed(morph_result, zphot_result)</code></pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="demo-showcase">
+                <div class="demo-header">
+                    <h3><i class="fas fa-desktop"></i> GalfitX Demo Deep Dive</h3>
+                    <p>Exploring the comprehensive gxdemo.py workflow in detail</p>
+                </div>
+
+                <div class="demo-content">
+                    <div class="demo-overview">
+                        <h4>Overview of gxdemo.py</h4>
+                        <p>The gxdemo.py script provides a complete end-to-end demonstration of GalfitX capabilities, implementing a sophisticated multi-wavelength analysis pipeline:</p>
+
+                        <div class="demo-features">
+                            <div class="feature">
+                                <i class="fas fa-check-circle"></i>
+                                <div>
+                                    <h5>Advanced Source Detection</h5>
+                                    <p>HDR (High Dynamic Range) detection with dual-mode thresholding to simultaneously detect faint extended sources and bright compact objects</p>
+                                </div>
+                            </div>
+                            <div class="feature">
+                                <i class="fas fa-check-circle"></i>
+                                <div>
+                                    <h5>Multi-band Processing</h5>
+                                    <p>Simultaneous analysis of 6 NIRCam bands from F115W to F444W with consistent calibration</p>
+                                </div>
+                            </div>
+                            <div class="feature">
+                                <i class="fas fa-check-circle"></i>
+                                <div>
+                                    <h5>Object Grouping</h5>
+                                    <p>Automatic grouping of related objects that should be fitted simultaneously to account for blending</p>
+                                </div>
+                            </div>
+                            <div class="feature">
+                                <i class="fas fa-check-circle"></i>
+                                <div>
+                                    <h5>Photometric Redshifts</h5>
+                                    <p>Integration with EAZY for SED fitting and photometric redshift determination</p>
+                                </div>
+                            </div>
+                            <div class="feature">
+                                <i class="fas fa-check-circle"></i>
+                                <div>
+                                    <h5>Joint Image+SED Fitting</h5>
+                                    <p>Combining morphological and spectral information for improved physical parameter estimation</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="demo-code-section">
+                        <h4>Key Workflow Components</h4>
+                        <pre><code class="language-python"># Complete workflow from gxdemo.py
+begin_time = datetime.datetime.now()
+
+# 1. Source detection with SExtractor_HDR
+outtab, outsegm = SExtractor_HDR(detname,
+    kernel=(kernel, kernel),
+    detect_minarea=(25, 15),
+    detect_thresh=(3, 1.8),
+    deblend=(True, True),
+    # ... additional parameters
+)
+
+# 2. Postage stamp creation
+create_stamp_file(detname, catalog_name, sizefac=2.5, outfile=stampfile, pixel_scale=ref_pixel_scale)
+
+# 3. Cut stamps for all bands
+for i in range(nband):
+    sciname = sciname_list[i]
+    label = label_list[i]
+    cut_stamps(sciname, cutout_dir, label=label, stampfile=stampfile, ps=pixel_scale_list[i])
+
+# 4. Object grouping for simultaneous fitting
+groups = Union_Set(object_dict)
+
+# 5. Morphological fitting with GalfitS
+for idx in sorted_idx_group:
+    # Prepare inputs
+    image_stamp_list = [...]
+    mask_file_list = [...]
+    psf_file_used = process_psf(...)
+
+    # Generate GalfitS configuration
+    prepare_galfits(...)
+
+    # Execute fitting
+    command = f"python {galfitS_path} --config {lyric_path} ..."
+    os.system(command)
+
+# 6. Photometric redshift derivation
+run_eazy(...)
+
+# 7. Combined analysis
+combine_catalogs(...)
+
+total_time = datetime.datetime.now() - begin_time</code></pre>
+                    </div>
+
+                    <div class="demo-results">
+                        <h4>Expected Outputs</h4>
+                        <div class="results-grid">
+                            <div class="result-item">
+                                <i class="fas fa-images"></i>
+                                <h5>Fitted Model Images</h5>
+                                <p>Reconstructed galaxy models in each band</p>
+                            </div>
+                            <div class="result-item">
+                                <i class="fas fa-wave-square"></i>
+                                <h5>Residual Images</h5>
+                                <p>Differences between observed and fitted images</p>
+                            </div>
+                            <div class="result-item">
+                                <i class="fas fa-chart-bar"></i>
+                                <h5>Morphological Catalog</h5>
+                                <p>Sersic indices, sizes, luminosities, and shapes</p>
+                            </div>
+                            <div class="result-item">
+                                <i class="fas fa-globe-americas"></i>
+                                <h5>Photometric Redshifts</h5>
+                                <p>Redshift estimates with uncertainties</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
         <div class="container">
-            <p>&copy; 2026 GalfitX Project. Licensed under MIT License.</p>
-            <p>Created with ❤️ for the astronomy community</p>
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Galfit<span class="highlight">X</span></h3>
+                    <p>Advanced astronomical image processing for the modern era.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-github"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+
+                <div class="footer-section">
+                    <h4>Documentation</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="api.html">API Reference</a></li>
+                        <li><a href="tutorials.html">Tutorials</a></li>
+                        <li><a href="examples.html">Examples</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h4>Support</h4>
+                    <ul>
+                        <li><a href="#">GitHub Issues</a></li>
+                        <li><a href="#">Community Forum</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                        <li><a href="#">FAQ</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2026 GalfitX Project. Licensed under MIT License.</p>
+            </div>
         </div>
     </footer>
+
+    <script>
+        // Mobile menu toggle
+        const hamburger = document.querySelector('.hamburger');
+        const navMenu = document.querySelector('.nav-menu');
+
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            navMenu.classList.toggle('active');
+        });
+
+        // Close mobile menu when clicking on a link
+        document.querySelectorAll('.nav-link').forEach(n => n.addEventListener('click', () => {
+            hamburger.classList.remove('active');
+            navMenu.classList.remove('active');
+        }));
+    </script>
 </body>
 </html>
