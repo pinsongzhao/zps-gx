@@ -1,8 +1,39 @@
-# GalfitX
-GalfitX is a multiwavelength image reduction and analysis tool that facilitates automatic source detection, image decomposition, and photometry measurements.
+# GalfitX Documentation
 
-## Download GalfitX_demo
+## Overview
+This repository contains the GalfitX astronomical image processing pipeline and its documentation.
 
-Image FITS files have been removed from the git repository. You can download `GalfitX_demo` from the following link:
+## Documentation Website
+The documentation website is available at: https://pinsongzhao.github.io/zps-gx/
 
-https://drive.google.com/drive/folders/1rGchkek3QZLZ2SNNyoPNDKcE1UH8DHbs 
+## Project Information
+- **Name**: GalfitX
+- **Description**: A sophisticated astronomical image processing pipeline for multi-wavelength analysis
+- **Language**: Python
+- **Domain**: Astronomy, Image Processing
+
+## Repository Structure
+```
+├── galfitx/                 # Main package source code
+├── docs/                   # Documentation website files
+│   ├── index.html          # Main documentation page
+│   ├── api.html            # API reference
+│   ├── tutorials.html      # Step-by-step tutorials
+│   ├── examples.html       # Practical examples
+│   └── styles.css          # Styling for documentation
+├── Doc_gx.md               # Comprehensive project documentation
+└── README.md               # Project overview
+```
+
+## Features
+- Multi-wavelength image analysis
+- Automated source detection
+- Galaxy morphology fitting
+- Photometry measurements
+- Flexible configuration system
+
+## Installation
+For installation instructions, visit our [documentation website](https://pinsongzhao.github.io/zps-gx/).
+
+## License
+This project is licensed under the MIT License.
